@@ -2,7 +2,7 @@
 
 $servidor = "sql304.infinityfree.com";
 $usuario = "if0_42983342";
-$password = "TU_CONTRASEÑA_DE_MYSQL";
+$password = "uz9VHonZsSEzz3";
 $base_datos = "if0_42983342_senati_eti";
 $puerto = 3306;
 
