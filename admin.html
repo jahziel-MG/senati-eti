@@ -4,6 +4,7 @@
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Senati ETI | Administrador</title>
@@ -29,7 +30,9 @@
 
             <div>
 
-                <h1>Senati ETI</h1>
+                <h1>
+                    Senati ETI
+                </h1>
 
                 <span>
                     Sistema de Gestión de Visitas
@@ -60,6 +63,8 @@
     <main class="dashboard">
 
 
+        <!-- TÍTULO -->
+
         <section class="dashboard-titulo">
 
             <h2>
@@ -77,6 +82,8 @@
 
         <section class="indicadores">
 
+
+            <!-- VISITANTES ACTIVOS -->
 
             <div class="indicador">
 
@@ -99,6 +106,8 @@
             </div>
 
 
+            <!-- VISITAS REGISTRADAS -->
+
             <div class="indicador">
 
                 <span class="indicador-icono">
@@ -120,6 +129,8 @@
             </div>
 
 
+            <!-- TIEMPO PROMEDIO -->
+
             <div class="indicador">
 
                 <span class="indicador-icono">
@@ -140,6 +151,8 @@
 
             </div>
 
+
+            <!-- EFECTIVIDAD -->
 
             <div class="indicador">
 
@@ -279,6 +292,7 @@
 
         <section class="panel auditoria">
 
+
             <div class="panel-titulo">
 
                 <div>
@@ -308,11 +322,25 @@
 
                         <tr>
 
-                            <th>Visitante</th>
-                            <th>Asunto</th>
-                            <th>Empleado</th>
-                            <th>Estado</th>
-                            <th>Tiempo de espera</th>
+                            <th>
+                                Visitante
+                            </th>
+
+                            <th>
+                                Asunto
+                            </th>
+
+                            <th>
+                                Empleado
+                            </th>
+
+                            <th>
+                                Estado
+                            </th>
+
+                            <th>
+                                Tiempo de espera
+                            </th>
 
                         </tr>
 
@@ -324,7 +352,7 @@
                         <tr>
 
                             <td colspan="5">
-                                No hay visitas que superen el tiempo permitido.
+                                Cargando auditoría...
                             </td>
 
                         </tr>
@@ -334,6 +362,7 @@
                 </table>
 
             </div>
+
 
         </section>
 
@@ -361,7 +390,9 @@
     <script>
 
         let graficoVisitasHora = null;
+
         let graficoEmpleados = null;
+
         let graficoAsuntos = null;
 
 
@@ -420,13 +451,15 @@
 
                 const horas =
                     datos.visitas_hora.map(
-                        visita => visita.hora + ":00"
+                        visita =>
+                            visita.hora + ":00"
                     );
 
 
                 const cantidadesHoras =
                     datos.visitas_hora.map(
-                        visita => visita.total
+                        visita =>
+                            visita.total
                     );
 
 
@@ -437,7 +470,9 @@
 
 
                 if (graficoVisitasHora) {
+
                     graficoVisitasHora.destroy();
+
                 }
 
 
@@ -477,7 +512,9 @@
                             plugins: {
 
                                 legend: {
+
                                     display: false
+
                                 }
 
                             },
@@ -489,7 +526,9 @@
                                     beginAtZero: true,
 
                                     ticks: {
+
                                         precision: 0
+
                                     }
 
                                 }
@@ -507,13 +546,15 @@
 
                 const empleados =
                     datos.rendimiento_empleados.map(
-                        empleado => empleado.empleado
+                        empleado =>
+                            empleado.empleado
                     );
 
 
                 const cantidadesEmpleados =
                     datos.rendimiento_empleados.map(
-                        empleado => empleado.total
+                        empleado =>
+                            empleado.total
                     );
 
 
@@ -524,7 +565,9 @@
 
 
                 if (graficoEmpleados) {
+
                     graficoEmpleados.destroy();
+
                 }
 
 
@@ -562,7 +605,9 @@
                             plugins: {
 
                                 legend: {
+
                                     display: false
+
                                 }
 
                             },
@@ -574,7 +619,9 @@
                                     beginAtZero: true,
 
                                     ticks: {
+
                                         precision: 0
+
                                     }
 
                                 }
@@ -592,13 +639,15 @@
 
                 const asuntos =
                     datos.distribucion_asuntos.map(
-                        asunto => asunto.asunto
+                        asunto =>
+                            asunto.asunto
                     );
 
 
                 const cantidadesAsuntos =
                     datos.distribucion_asuntos.map(
-                        asunto => asunto.total
+                        asunto =>
+                            asunto.total
                     );
 
 
@@ -609,7 +658,9 @@
 
 
                 if (graficoAsuntos) {
+
                     graficoAsuntos.destroy();
+
                 }
 
 
@@ -656,22 +707,139 @@
 
                     });
 
-            }
+
+                /* ==============================
+                   AUDITORÍA DE VISITAS
+                ============================== */
+
+                const tablaAuditoria =
+                    document.getElementById(
+                        "tabla-auditoria"
+                    );
 
 
-            catch (error) {
+                if (
+                    datos.auditoria &&
+                    datos.auditoria.length > 0
+                ) {
+
+                    tablaAuditoria.innerHTML = "";
+
+
+                    datos.auditoria.forEach(
+                        visita => {
+
+                            const fila =
+                                document.createElement(
+                                    "tr"
+                                );
+
+
+                            /*
+                             * Resaltar en rojo
+                             * las visitas que
+                             * superan los 15 minutos.
+                             */
+
+                            fila.style.backgroundColor =
+                                "rgba(220, 53, 69, 0.18)";
+
+                            fila.style.color =
+                                "#ffffff";
+
+
+                            fila.innerHTML = `
+
+                                <td>
+                                    ${visita.visitante}
+                                </td>
+
+                                <td>
+                                    ${visita.asunto}
+                                </td>
+
+                                <td>
+                                    ${visita.empleado}
+                                </td>
+
+                                <td>
+                                    ${visita.estado}
+                                </td>
+
+                                <td>
+
+                                    <strong>
+                                        🚨
+                                        ${visita.tiempo_espera}
+                                        min
+                                    </strong>
+
+                                </td>
+
+                            `;
+
+
+                            tablaAuditoria.appendChild(
+                                fila
+                            );
+
+                        }
+                    );
+
+
+                } else {
+
+                    tablaAuditoria.innerHTML = `
+
+                        <tr>
+
+                            <td colspan="5">
+
+                                No hay visitas que
+                                superen el tiempo permitido.
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+
+
+            } catch (error) {
 
                 console.error(
                     "Error al cargar dashboard:",
                     error
                 );
 
+
+                document.getElementById(
+                    "tabla-auditoria"
+                ).innerHTML = `
+
+                    <tr>
+
+                        <td colspan="5">
+
+                            No se pudo cargar la
+                            información de auditoría.
+
+                        </td>
+
+                    </tr>
+
+                `;
+
             }
 
         }
 
 
-        /* CARGAR DASHBOARD */
+        /* ==============================
+           CARGAR DASHBOARD
+        ============================== */
 
         cargarDashboard();
 

@@ -13,7 +13,8 @@ $respuesta = [
 
     "visitas_hora" => [],
     "rendimiento_empleados" => [],
-    "distribucion_asuntos" => []
+    "distribucion_asuntos" => [],
+    "auditoria" => []
 
 ];
 
@@ -254,6 +255,97 @@ if ($resultado) {
 
             "total" =>
                 (int) $fila["total"]
+
+        ];
+    }
+}
+
+
+/* =====================================================
+   8. AUDITORÍA DE TIEMPO DE ESPERA
+===================================================== */
+
+$sql = "
+    SELECT
+
+        v.id_visita,
+
+        CONCAT(
+            vi.nombres,
+            ' ',
+            vi.apellidos
+        ) AS visitante,
+
+        a.nombre AS asunto,
+
+        COALESCE(
+            CONCAT(
+                e.nombres,
+                ' ',
+                e.apellidos
+            ),
+            'Sin asignar'
+        ) AS empleado,
+
+        v.estado,
+
+        TIMESTAMPDIFF(
+            MINUTE,
+            v.registrado_at,
+            COALESCE(
+                v.tomado_at,
+                CURRENT_TIMESTAMP
+            )
+        ) AS tiempo_espera
+
+    FROM visitas v
+
+    INNER JOIN visitantes vi
+        ON v.id_visitante = vi.id_visitante
+
+    INNER JOIN asuntos a
+        ON v.id_asunto = a.id_asunto
+
+    LEFT JOIN empleados e
+        ON v.id_empleado = e.id_empleado
+
+    WHERE TIMESTAMPDIFF(
+        MINUTE,
+        v.registrado_at,
+        COALESCE(
+            v.tomado_at,
+            CURRENT_TIMESTAMP
+        )
+    ) > 15
+
+    ORDER BY tiempo_espera DESC
+";
+
+$resultado = $conexion->query($sql);
+
+if ($resultado) {
+
+    while ($fila = $resultado->fetch_assoc()) {
+
+        $respuesta["auditoria"][] = [
+
+            "id_visita" =>
+                (int) $fila["id_visita"],
+
+            "visitante" =>
+                $fila["visitante"],
+
+            "asunto" =>
+                $fila["asunto"],
+
+            "empleado" =>
+                $fila["empleado"],
+
+            "estado" =>
+                $fila["estado"],
+
+            "tiempo_espera" =>
+                (int) $fila["tiempo_espera"]
 
         ];
     }

@@ -2,15 +2,25 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Senati ETI | Registrar visita</title>
 
-    <link rel="stylesheet" href="./Css/estilo.css">
+    <link
+        rel="stylesheet"
+        href="./Css/estilo.css"
+    >
+
 </head>
 
 <body>
+
 
     <!-- =========================================
          ENCABEZADO
@@ -25,16 +35,21 @@
             </div>
 
             <div>
-                <h1>Senati ETI</h1>
+
+                <h1>
+                    Senati ETI
+                </h1>
 
                 <span>
                     Sistema de Gestión de Visitas
                 </span>
+
             </div>
 
         </div>
 
     </header>
+
 
 
     <!-- =========================================
@@ -45,16 +60,28 @@
 
         <section class="tarjeta formulario-visita">
 
+
+            <!-- ICONO -->
+
             <div class="icono-principal">
                 📋
             </div>
 
-            <h2>Registrar visita</h2>
+
+            <!-- TÍTULO -->
+
+            <h2>
+                Registrar visita
+            </h2>
+
 
             <p class="descripcion">
                 Completa tus datos para registrar tu visita
             </p>
 
+
+
+            <!-- FORMULARIO -->
 
             <form
                 action="./php/registrar_visita.php"
@@ -62,12 +89,14 @@
             >
 
 
-                <!-- DOCUMENTO -->
+                <!-- =================================
+                     DOCUMENTO
+                ================================== -->
 
                 <div class="campo">
 
                     <label for="documento">
-                        Documento
+                        Documento *
                     </label>
 
                     <input
@@ -76,18 +105,22 @@
                         name="documento"
                         placeholder="Ingresa tu documento"
                         maxlength="20"
+                        autocomplete="off"
                         required
                     >
 
                 </div>
 
 
-                <!-- NOMBRES -->
+
+                <!-- =================================
+                     NOMBRES
+                ================================== -->
 
                 <div class="campo">
 
                     <label for="nombres">
-                        Nombres
+                        Nombres *
                     </label>
 
                     <input
@@ -102,12 +135,15 @@
                 </div>
 
 
-                <!-- APELLIDOS -->
+
+                <!-- =================================
+                     APELLIDOS
+                ================================== -->
 
                 <div class="campo">
 
                     <label for="apellidos">
-                        Apellidos
+                        Apellidos *
                     </label>
 
                     <input
@@ -122,7 +158,10 @@
                 </div>
 
 
-                <!-- TELÉFONO -->
+
+                <!-- =================================
+                     TELÉFONO
+                ================================== -->
 
                 <div class="campo">
 
@@ -141,7 +180,10 @@
                 </div>
 
 
-                <!-- CORREO -->
+
+                <!-- =================================
+                     CORREO
+                ================================== -->
 
                 <div class="campo">
 
@@ -160,12 +202,15 @@
                 </div>
 
 
-                <!-- ASUNTO -->
+
+                <!-- =================================
+                     ASUNTO
+                ================================== -->
 
                 <div class="campo">
 
                     <label for="id_asunto">
-                        Asunto de la visita
+                        Asunto de la visita *
                     </label>
 
                     <select
@@ -207,7 +252,10 @@
                 </div>
 
 
-                <!-- PRIORIDAD -->
+
+                <!-- =================================
+                     PRIORIDAD
+                ================================== -->
 
                 <div class="campo">
 
@@ -225,7 +273,10 @@
                             Baja
                         </option>
 
-                        <option value="MEDIA" selected>
+                        <option
+                            value="MEDIA"
+                            selected
+                        >
                             Media
                         </option>
 
@@ -242,41 +293,57 @@
                 </div>
 
 
-                <!-- CONSULTA -->
+
+                <!-- =================================
+                     MOTIVO
+                ================================== -->
 
                 <div class="campo">
 
                     <label for="consulta">
-                        Motivo de la visita
+                        Motivo de la visita *
                     </label>
 
                     <textarea
                         id="consulta"
                         name="consulta"
                         placeholder="Describe brevemente el motivo de tu visita"
-                        rows="4"
+                        rows="5"
+                        maxlength="1000"
                         required
                     ></textarea>
 
                 </div>
 
 
-                <!-- BOTÓN -->
+
+                <!-- =================================
+                     BOTÓN REGISTRAR
+                ================================== -->
 
                 <button
                     type="submit"
                     class="btn-registrar"
                 >
+
                     📋 Registrar visita
+
                 </button>
 
             </form>
 
 
-            <!-- VOLVER -->
+
+            <!-- =================================
+                 VOLVER
+            ================================== -->
 
             <div class="separador">
-                <span>Volver</span>
+
+                <span>
+                    Volver
+                </span>
+
             </div>
 
 
@@ -284,19 +351,24 @@
                 href="index.html"
                 class="btn-acceso"
             >
+
                 🏠
+
                 <span>
                     Volver al inicio
                 </span>
+
             </a>
+
 
         </section>
 
     </main>
 
 
+
     <!-- =========================================
-         PIE
+         PIE DE PÁGINA
     ========================================== -->
 
     <footer class="pie">
@@ -310,6 +382,7 @@
         </span>
 
     </footer>
+
 
 </body>
 

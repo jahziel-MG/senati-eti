@@ -5,17 +5,13 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Senati ETI | Empleado</title>
 
-    <link
-        rel="stylesheet"
-        href="./Css/estilo.css"
-    >
+    <link rel="stylesheet"
+          href="./Css/estilo.css">
 
     <style>
 
@@ -24,116 +20,104 @@
         ========================================= */
 
         .accion-atencion {
-
             display: flex;
-
             flex-direction: column;
-
             gap: 8px;
-
             min-width: 240px;
         }
 
-
         .respuesta-visita {
-
             width: 100%;
-
             min-height: 70px;
-
             padding: 10px;
-
             border-radius: 8px;
-
             border: 1px solid rgba(255,255,255,0.20);
-
             background: rgba(255,255,255,0.10);
-
             color: white;
-
             font-family: Arial, Helvetica, sans-serif;
-
             font-size: 13px;
-
             resize: vertical;
-
             box-sizing: border-box;
         }
 
-
         .respuesta-visita::placeholder {
-
             color: rgba(255,255,255,0.65);
         }
 
-
         .respuesta-visita:focus {
-
             outline: none;
-
             border-color: rgba(255,255,255,0.45);
         }
 
-
         .btn-tomar {
-
             padding: 10px 16px;
-
             border: none;
-
             border-radius: 8px;
-
             background: #19a463;
-
             color: white;
-
             font-size: 13px;
-
             font-weight: bold;
-
             cursor: pointer;
-
             transition: 0.2s;
         }
 
-
         .btn-tomar:hover {
-
             background: #148a52;
-
             transform: translateY(-1px);
         }
 
-
         .mensaje-resuelta {
-
             font-weight: bold;
-
             opacity: 0.9;
         }
 
+        /* =========================================
+           BOTÓN EXPORTAR
+        ========================================= */
+
+        .btn-exportar {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-exportar:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        /* =========================================
+           CABECERA DE VISITAS
+        ========================================= */
+
+        .cabecera-visitas {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
 
         /* =========================================
            AJUSTE DE TABLA
         ========================================= */
 
         .tabla-contenedor {
-
             overflow-x: auto;
         }
 
-
         table {
-
             width: 100%;
-
             border-collapse: collapse;
         }
 
-
         td,
         th {
-
             vertical-align: middle;
         }
 
@@ -247,7 +231,6 @@
             </div>
 
 
-
             <!-- EN ESPERA -->
 
             <div class="indicador">
@@ -269,7 +252,6 @@
                 </div>
 
             </div>
-
 
 
             <!-- EN ATENCIÓN -->
@@ -295,7 +277,6 @@
             </div>
 
 
-
             <!-- RESUELTAS -->
 
             <div class="indicador">
@@ -317,6 +298,7 @@
                 </div>
 
             </div>
+
 
         </section>
 
@@ -347,7 +329,6 @@
                 </span>
 
             </div>
-
 
 
             <div class="filtros-empleado">
@@ -396,7 +377,6 @@
                 </div>
 
 
-
                 <!-- ESTADO -->
 
                 <div class="filtro">
@@ -436,7 +416,6 @@
                 </div>
 
 
-
                 <!-- PRIORIDAD -->
 
                 <div class="filtro">
@@ -472,7 +451,6 @@
                 </div>
 
 
-
                 <!-- FECHA -->
 
                 <div class="filtro">
@@ -500,7 +478,8 @@
 
         <section class="panel visitas-empleado">
 
-            <div class="panel-titulo">
+
+            <div class="panel-titulo cabecera-visitas">
 
                 <div>
 
@@ -514,9 +493,15 @@
 
                 </div>
 
-                <span>
-                    👥
-                </span>
+
+                <button
+                    type="button"
+                    class="btn-exportar"
+                    onclick="exportarReporte()"
+                >
+                    📥 Exportar reporte
+                </button>
+
 
             </div>
 
@@ -577,6 +562,7 @@
 
         </section>
 
+
     </main>
 
 
@@ -610,7 +596,7 @@
 
         /* =========================================
            CARGAR VISITAS
-        ========================================= */
+        ========================================== */
 
         async function cargarVisitas() {
 
@@ -682,7 +668,6 @@
 
         function actualizarIndicadores() {
 
-
             const disponibles =
                 visitas.filter(
 
@@ -749,17 +734,10 @@
 
 
         /* =========================================
-           MOSTRAR VISITAS
+           OBTENER VISITAS FILTRADAS
         ========================================== */
 
-        function mostrarVisitas() {
-
-
-            const tabla =
-                document.getElementById(
-                    "tabla-visitas"
-                );
-
+        function obtenerVisitasFiltradas() {
 
             const filtroAsunto =
                 document.getElementById(
@@ -785,75 +763,82 @@
                 ).value;
 
 
+            return visitas.filter(
 
-            const visitasFiltradas =
-                visitas.filter(
+                visita => {
 
-                    visita => {
+                    const coincideAsunto =
 
+                        filtroAsunto === "" ||
 
-                        const coincideAsunto =
-
-                            filtroAsunto === "" ||
-
-                            visita.asunto === filtroAsunto;
+                        visita.asunto === filtroAsunto;
 
 
+                    const coincideEstado =
 
-                        const coincideEstado =
+                        filtroEstado === "" ||
 
-                            filtroEstado === "" ||
-
-                            visita.estado === filtroEstado;
-
+                        visita.estado === filtroEstado;
 
 
-                        const coincidePrioridad =
+                    const coincidePrioridad =
 
-                            filtroPrioridad === "" ||
+                        filtroPrioridad === "" ||
 
-                            visita.prioridad === filtroPrioridad;
-
-
-
-                        let coincideFecha = true;
+                        visita.prioridad === filtroPrioridad;
 
 
-
-                        if (filtroFecha !== "") {
-
-                            coincideFecha =
-
-                                visita.registrado_at
-
-                                    .substring(0, 10) ===
-
-                                filtroFecha;
-
-                        }
+                    let coincideFecha = true;
 
 
+                    if (filtroFecha !== "") {
 
-                        return (
+                        coincideFecha =
 
-                            coincideAsunto &&
-
-                            coincideEstado &&
-
-                            coincidePrioridad &&
-
-                            coincideFecha
-
-                        );
+                            visita.registrado_at
+                                .substring(0, 10) ===
+                            filtroFecha;
 
                     }
 
+
+                    return (
+
+                        coincideAsunto &&
+
+                        coincideEstado &&
+
+                        coincidePrioridad &&
+
+                        coincideFecha
+
+                    );
+
+                }
+
+            );
+
+        }
+
+
+
+        /* =========================================
+           MOSTRAR VISITAS
+        ========================================== */
+
+        function mostrarVisitas() {
+
+            const tabla =
+                document.getElementById(
+                    "tabla-visitas"
                 );
 
 
+            const visitasFiltradas =
+                obtenerVisitasFiltradas();
+
 
             tabla.innerHTML = "";
-
 
 
             if (
@@ -880,20 +865,15 @@
             }
 
 
-
             visitasFiltradas.forEach(
 
                 visita => {
-
 
                     const fila =
                         document.createElement("tr");
 
 
-
-                    /* =================================
-                       PRIORIDAD
-                    ================================= */
+                    /* PRIORIDAD */
 
                     let clasePrioridad =
                         "prioridad-baja";
@@ -930,9 +910,7 @@
 
 
 
-                    /* =================================
-                       ESTADO
-                    ================================= */
+                    /* ESTADO */
 
                     let claseEstado =
                         "estado-registrada";
@@ -969,9 +947,7 @@
 
 
 
-                    /* =================================
-                       HORA
-                    ================================= */
+                    /* HORA */
 
                     let hora = "--:--";
 
@@ -1015,17 +991,12 @@
 
 
 
-                    /* =================================
-                       ACCIÓN
-                    ================================= */
+                    /* ACCIÓN */
 
                     let accion = "";
 
 
-
-                    /* ---------------------------------
-                       REGISTRADA / ESPERANDO
-                    --------------------------------- */
+                    /* REGISTRADA / ESPERANDO */
 
                     if (
 
@@ -1058,10 +1029,7 @@
                     }
 
 
-
-                    /* ---------------------------------
-                       EN ATENCIÓN
-                    --------------------------------- */
+                    /* EN ATENCIÓN */
 
                     else if (
 
@@ -1082,7 +1050,6 @@
                                     data-id-visita="${visita.id_visita}"
 
                                     placeholder="Escribe la respuesta para el visitante..."
-
                                 ></textarea>
 
 
@@ -1109,10 +1076,7 @@
                     }
 
 
-
-                    /* ---------------------------------
-                       RESUELTA
-                    --------------------------------- */
+                    /* RESUELTA */
 
                     else if (
 
@@ -1136,19 +1100,23 @@
 
 
 
-                    /* =================================
-                       CREAR FILA
-                    ================================= */
+                    /* CREAR FILA */
 
                     fila.innerHTML = `
 
                         <td>
+
                             ${visita.visitante || "-"}
+
                         </td>
 
+
                         <td>
+
                             ${visita.asunto || "-"}
+
                         </td>
+
 
                         <td>
 
@@ -1162,6 +1130,7 @@
 
                         </td>
 
+
                         <td>
 
                             <span
@@ -1174,12 +1143,18 @@
 
                         </td>
 
-                        <td>
-                            ${hora}
-                        </td>
 
                         <td>
+
+                            ${hora}
+
+                        </td>
+
+
+                        <td>
+
                             ${accion}
+
                         </td>
 
                     `;
@@ -1200,7 +1175,6 @@
         ========================================== */
 
         async function tomarVisita(idVisita) {
-
 
             const datos =
                 new FormData();
@@ -1275,17 +1249,11 @@
         async function finalizarVisita(idVisita) {
 
 
-            /*
-             * BUSCAMOS EL TEXTAREA POR EL ID
-             * DE LA VISITA.
-             *
-             * Esto corrige el problema:
-             * "No se encontró el campo de respuesta."
-             */
-
             const campo =
                 document.querySelector(
+
                     `.respuesta-visita[data-id-visita="${idVisita}"]`
+
                 );
 
 
@@ -1319,7 +1287,6 @@
             }
 
 
-
             const datos =
                 new FormData();
 
@@ -1334,7 +1301,6 @@
                 "respuesta",
                 respuestaTexto
             );
-
 
 
             try {
@@ -1359,7 +1325,6 @@
                     await respuesta.json();
 
 
-
                 if (!resultado.exito) {
 
                     alert(
@@ -1371,19 +1336,10 @@
                 }
 
 
-
                 alert(
                     "La visita fue finalizada correctamente."
                 );
 
-
-
-                /*
-                 * Volvemos a cargar las visitas
-                 * para actualizar:
-                 *
-                 * EN ATENCIÓN -> RESUELTA
-                 */
 
                 await cargarVisitas();
 
@@ -1404,38 +1360,195 @@
 
 
         /* =========================================
+           EXPORTAR REPORTE
+        ========================================== */
+
+        function exportarReporte() {
+
+            const visitasFiltradas =
+                obtenerVisitasFiltradas();
+
+
+            if (
+                visitasFiltradas.length === 0
+            ) {
+
+                alert(
+                    "No hay visitas para exportar."
+                );
+
+                return;
+
+            }
+
+
+            let csv =
+                "Visitante,Asunto,Prioridad,Estado,Fecha y hora de registro\n";
+
+
+            visitasFiltradas.forEach(
+
+                visita => {
+
+                    const visitante =
+                        limpiarCSV(
+                            visita.visitante || "-"
+                        );
+
+
+                    const asunto =
+                        limpiarCSV(
+                            visita.asunto || "-"
+                        );
+
+
+                    const prioridad =
+                        limpiarCSV(
+                            visita.prioridad || "-"
+                        );
+
+
+                    const estado =
+                        limpiarCSV(
+                            visita.estado || "-"
+                        );
+
+
+                    const registro =
+                        limpiarCSV(
+                            visita.registrado_at || "-"
+                        );
+
+
+                    csv +=
+                        `"${visitante}","${asunto}","${prioridad}","${estado}","${registro}"\n`;
+
+                }
+
+            );
+
+
+            /*
+             * BOM para que Excel reconozca
+             * correctamente los caracteres
+             * como Ñ y tildes.
+             */
+
+            const contenido =
+                "\uFEFF" + csv;
+
+
+            const archivo =
+                new Blob(
+                    [contenido],
+                    {
+                        type:
+                            "text/csv;charset=utf-8;"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(archivo);
+
+
+            const enlace =
+                document.createElement("a");
+
+
+            enlace.href = url;
+
+            enlace.download =
+                "reporte_visitas.csv";
+
+
+            document.body.appendChild(
+                enlace
+            );
+
+
+            enlace.click();
+
+
+            document.body.removeChild(
+                enlace
+            );
+
+
+            URL.revokeObjectURL(
+                url
+            );
+
+        }
+
+
+
+        /* =========================================
+           LIMPIAR DATOS PARA CSV
+        ========================================== */
+
+        function limpiarCSV(valor) {
+
+            return String(valor)
+                .replace(/"/g, '""');
+
+        }
+
+
+
+        /* =========================================
            FILTROS
         ========================================== */
 
         document
+
             .getElementById("filtro-asunto")
+
             .addEventListener(
+
                 "change",
+
                 mostrarVisitas
+
             );
 
 
         document
+
             .getElementById("filtro-estado")
+
             .addEventListener(
+
                 "change",
+
                 mostrarVisitas
+
             );
 
 
         document
+
             .getElementById("filtro-prioridad")
+
             .addEventListener(
+
                 "change",
+
                 mostrarVisitas
+
             );
 
 
         document
+
             .getElementById("filtro-fecha")
+
             .addEventListener(
+
                 "change",
+
                 mostrarVisitas
+
             );
 
 
