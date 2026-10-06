@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Senati ETI | Empleado</title>
+
+    <link
+        rel="stylesheet"
+        href="./Css/estilo.css"
+    >
+
+    <style>
+
+        /* =========================================
+           ACCIONES DE VISITA
+        ========================================= */
+
+        .accion-atencion {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+            min-width: 240px;
+        }
+
+
+        .respuesta-visita {
+
+            width: 100%;
+
+            min-height: 70px;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            border: 1px solid rgba(255,255,255,0.20);
+
+            background: rgba(255,255,255,0.10);
+
+            color: white;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            font-size: 13px;
+
+            resize: vertical;
+
+            box-sizing: border-box;
+        }
+
+
+        .respuesta-visita::placeholder {
+
+            color: rgba(255,255,255,0.65);
+        }
+
+
+        .respuesta-visita:focus {
+
+            outline: none;
+
+            border-color: rgba(255,255,255,0.45);
+        }
+
+
+        .btn-tomar {
+
+            padding: 10px 16px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #19a463;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .btn-tomar:hover {
+
+            background: #148a52;
+
+            transform: translateY(-1px);
+        }
+
+
+        .mensaje-resuelta {
+
+            font-weight: bold;
+
+            opacity: 0.9;
+        }
+
+
+        /* =========================================
+           AJUSTE DE TABLA
+        ========================================= */
+
+        .tabla-contenedor {
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+
+        td,
+        th {
+
+            vertical-align: middle;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         ENCABEZADO
+    ========================================== -->
+
+    <header class="encabezado">
+
+        <div class="logo">
+
+            <div class="logo-icono">
+                +
+            </div>
+
+            <div>
+
+                <h1>
+                    Senati ETI
+                </h1>
+
+                <span>
+                    Sistema de Gestión de Visitas
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="usuario-header">
+
+            <span>
+                👨‍💼 Empleado
+            </span>
+
+            <a href="index.html">
+                Cerrar sesión
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         CONTENIDO
+    ========================================== -->
+
+    <main class="dashboard">
+
+
+        <!-- =========================================
+             TÍTULO
+        ========================================== -->
+
+        <section class="dashboard-titulo">
+
+            <div>
+
+                <h2>
+                    Panel del Empleado
+                </h2>
+
+                <p>
+                    Gestión y atención de visitas asignadas
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             INDICADORES
+        ========================================== -->
+
+        <section class="indicadores">
+
+
+            <!-- DISPONIBLES -->
+
+            <div class="indicador">
+
+                <span class="indicador-icono">
+                    📋
+                </span>
+
+                <div>
+
+                    <p>
+                        Visitas disponibles
+                    </p>
+
+                    <h3 id="total-disponibles">
+                        0
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EN ESPERA -->
+
+            <div class="indicador">
+
+                <span class="indicador-icono">
+                    ⏳
+                </span>
+
+                <div>
+
+                    <p>
+                        En espera
+                    </p>
+
+                    <h3 id="total-espera">
+                        0
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EN ATENCIÓN -->
+
+            <div class="indicador">
+
+                <span class="indicador-icono">
+                    🔄
+                </span>
+
+                <div>
+
+                    <p>
+                        En atención
+                    </p>
+
+                    <h3 id="total-atencion">
+                        0
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RESUELTAS -->
+
+            <div class="indicador">
+
+                <span class="indicador-icono">
+                    ✅
+                </span>
+
+                <div>
+
+                    <p>
+                        Resueltas
+                    </p>
+
+                    <h3 id="total-resueltas">
+                        0
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             FILTROS
+        ========================================== -->
+
+        <section class="panel">
+
+            <div class="panel-titulo">
+
+                <div>
+
+                    <h3>
+                        Filtros de búsqueda
+                    </h3>
+
+                    <p>
+                        Filtra las visitas según sus características
+                    </p>
+
+                </div>
+
+                <span>
+                    🔎
+                </span>
+
+            </div>
+
+
+
+            <div class="filtros-empleado">
+
+
+                <!-- ASUNTO -->
+
+                <div class="filtro">
+
+                    <label for="filtro-asunto">
+                        Asunto
+                    </label>
+
+                    <select id="filtro-asunto">
+
+                        <option value="">
+                            Todos
+                        </option>
+
+                        <option value="Matrícula">
+                            Matrícula
+                        </option>
+
+                        <option value="Pagos">
+                            Pagos
+                        </option>
+
+                        <option value="Tutoría">
+                            Tutoría
+                        </option>
+
+                        <option value="Notas">
+                            Notas
+                        </option>
+
+                        <option value="Certificados">
+                            Certificados
+                        </option>
+
+                        <option value="Otros">
+                            Otros
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ESTADO -->
+
+                <div class="filtro">
+
+                    <label for="filtro-estado">
+                        Estado
+                    </label>
+
+                    <select id="filtro-estado">
+
+                        <option value="">
+                            Todos
+                        </option>
+
+                        <option value="REGISTRADA">
+                            Registrada
+                        </option>
+
+                        <option value="ESPERANDO">
+                            Esperando
+                        </option>
+
+                        <option value="EN_ATENCION">
+                            En atención
+                        </option>
+
+                        <option value="RESUELTA">
+                            Resuelta
+                        </option>
+
+                        <option value="CANCELADA">
+                            Cancelada
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- PRIORIDAD -->
+
+                <div class="filtro">
+
+                    <label for="filtro-prioridad">
+                        Prioridad
+                    </label>
+
+                    <select id="filtro-prioridad">
+
+                        <option value="">
+                            Todas
+                        </option>
+
+                        <option value="BAJA">
+                            Baja
+                        </option>
+
+                        <option value="MEDIA">
+                            Media
+                        </option>
+
+                        <option value="ALTA">
+                            Alta
+                        </option>
+
+                        <option value="URGENTE">
+                            Urgente
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- FECHA -->
+
+                <div class="filtro">
+
+                    <label for="filtro-fecha">
+                        Fecha
+                    </label>
+
+                    <input
+                        type="date"
+                        id="filtro-fecha"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             LISTA DE VISITAS
+        ========================================== -->
+
+        <section class="panel visitas-empleado">
+
+            <div class="panel-titulo">
+
+                <div>
+
+                    <h3>
+                        Visitas disponibles
+                    </h3>
+
+                    <p>
+                        Solicitudes y visitas pendientes de atención
+                    </p>
+
+                </div>
+
+                <span>
+                    👥
+                </span>
+
+            </div>
+
+
+
+            <div class="tabla-contenedor">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Visitante
+                            </th>
+
+                            <th>
+                                Asunto
+                            </th>
+
+                            <th>
+                                Prioridad
+                            </th>
+
+                            <th>
+                                Estado
+                            </th>
+
+                            <th>
+                                Registro
+                            </th>
+
+                            <th>
+                                Acción
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabla-visitas">
+
+                        <tr>
+
+                            <td colspan="6">
+                                Cargando visitas...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         PIE DE PÁGINA
+    ========================================== -->
+
+    <footer class="pie">
+
+        <p>
+            Senati ETI © 2026
+        </p>
+
+        <span>
+            Panel del Empleado
+        </span>
+
+    </footer>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script>
+
+        let visitas = [];
+
+
+        /* =========================================
+           CARGAR VISITAS
+        ========================================= */
+
+        async function cargarVisitas() {
+
+            const tabla =
+                document.getElementById("tabla-visitas");
+
+
+            try {
+
+                const respuesta =
+                    await fetch("./php/empleado.php");
+
+
+                if (!respuesta.ok) {
+
+                    throw new Error(
+                        "No se pudieron obtener las visitas."
+                    );
+
+                }
+
+
+                visitas =
+                    await respuesta.json();
+
+
+                if (!Array.isArray(visitas)) {
+
+                    throw new Error(
+                        "La respuesta del servidor no es válida."
+                    );
+
+                }
+
+
+                actualizarIndicadores();
+
+                mostrarVisitas();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                tabla.innerHTML = `
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            Error al cargar las visitas.
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+
+        }
+
+
+
+        /* =========================================
+           ACTUALIZAR INDICADORES
+        ========================================== */
+
+        function actualizarIndicadores() {
+
+
+            const disponibles =
+                visitas.filter(
+
+                    visita =>
+
+                        visita.estado === "REGISTRADA" ||
+
+                        visita.estado === "ESPERANDO"
+
+                ).length;
+
+
+            const espera =
+                visitas.filter(
+
+                    visita =>
+
+                        visita.estado === "ESPERANDO"
+
+                ).length;
+
+
+            const atencion =
+                visitas.filter(
+
+                    visita =>
+
+                        visita.estado === "EN_ATENCION"
+
+                ).length;
+
+
+            const resueltas =
+                visitas.filter(
+
+                    visita =>
+
+                        visita.estado === "RESUELTA"
+
+                ).length;
+
+
+            document.getElementById(
+                "total-disponibles"
+            ).textContent = disponibles;
+
+
+            document.getElementById(
+                "total-espera"
+            ).textContent = espera;
+
+
+            document.getElementById(
+                "total-atencion"
+            ).textContent = atencion;
+
+
+            document.getElementById(
+                "total-resueltas"
+            ).textContent = resueltas;
+
+        }
+
+
+
+        /* =========================================
+           MOSTRAR VISITAS
+        ========================================== */
+
+        function mostrarVisitas() {
+
+
+            const tabla =
+                document.getElementById(
+                    "tabla-visitas"
+                );
+
+
+            const filtroAsunto =
+                document.getElementById(
+                    "filtro-asunto"
+                ).value;
+
+
+            const filtroEstado =
+                document.getElementById(
+                    "filtro-estado"
+                ).value;
+
+
+            const filtroPrioridad =
+                document.getElementById(
+                    "filtro-prioridad"
+                ).value;
+
+
+            const filtroFecha =
+                document.getElementById(
+                    "filtro-fecha"
+                ).value;
+
+
+
+            const visitasFiltradas =
+                visitas.filter(
+
+                    visita => {
+
+
+                        const coincideAsunto =
+
+                            filtroAsunto === "" ||
+
+                            visita.asunto === filtroAsunto;
+
+
+
+                        const coincideEstado =
+
+                            filtroEstado === "" ||
+
+                            visita.estado === filtroEstado;
+
+
+
+                        const coincidePrioridad =
+
+                            filtroPrioridad === "" ||
+
+                            visita.prioridad === filtroPrioridad;
+
+
+
+                        let coincideFecha = true;
+
+
+
+                        if (filtroFecha !== "") {
+
+                            coincideFecha =
+
+                                visita.registrado_at
+
+                                    .substring(0, 10) ===
+
+                                filtroFecha;
+
+                        }
+
+
+
+                        return (
+
+                            coincideAsunto &&
+
+                            coincideEstado &&
+
+                            coincidePrioridad &&
+
+                            coincideFecha
+
+                        );
+
+                    }
+
+                );
+
+
+
+            tabla.innerHTML = "";
+
+
+
+            if (
+                visitasFiltradas.length === 0
+            ) {
+
+                tabla.innerHTML = `
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            No hay visitas que coincidan
+                            con los filtros.
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+                return;
+
+            }
+
+
+
+            visitasFiltradas.forEach(
+
+                visita => {
+
+
+                    const fila =
+                        document.createElement("tr");
+
+
+
+                    /* =================================
+                       PRIORIDAD
+                    ================================= */
+
+                    let clasePrioridad =
+                        "prioridad-baja";
+
+
+                    if (
+                        visita.prioridad === "MEDIA"
+                    ) {
+
+                        clasePrioridad =
+                            "prioridad-media";
+
+                    }
+
+
+                    if (
+                        visita.prioridad === "ALTA"
+                    ) {
+
+                        clasePrioridad =
+                            "prioridad-alta";
+
+                    }
+
+
+                    if (
+                        visita.prioridad === "URGENTE"
+                    ) {
+
+                        clasePrioridad =
+                            "prioridad-urgente";
+
+                    }
+
+
+
+                    /* =================================
+                       ESTADO
+                    ================================= */
+
+                    let claseEstado =
+                        "estado-registrada";
+
+
+                    if (
+                        visita.estado === "ESPERANDO"
+                    ) {
+
+                        claseEstado =
+                            "estado-esperando";
+
+                    }
+
+
+                    if (
+                        visita.estado === "EN_ATENCION"
+                    ) {
+
+                        claseEstado =
+                            "estado-atencion";
+
+                    }
+
+
+                    if (
+                        visita.estado === "RESUELTA"
+                    ) {
+
+                        claseEstado =
+                            "estado-resuelta";
+
+                    }
+
+
+
+                    /* =================================
+                       HORA
+                    ================================= */
+
+                    let hora = "--:--";
+
+
+                    if (
+                        visita.registrado_at
+                    ) {
+
+                        const fecha =
+                            new Date(
+
+                                visita.registrado_at
+                                    .replace(
+                                        " ",
+                                        "T"
+                                    )
+
+                            );
+
+
+                        if (!isNaN(fecha)) {
+
+                            hora =
+                                fecha.toLocaleTimeString(
+
+                                    "es-PE",
+
+                                    {
+
+                                        hour: "2-digit",
+
+                                        minute: "2-digit"
+
+                                    }
+
+                                );
+
+                        }
+
+                    }
+
+
+
+                    /* =================================
+                       ACCIÓN
+                    ================================= */
+
+                    let accion = "";
+
+
+
+                    /* ---------------------------------
+                       REGISTRADA / ESPERANDO
+                    --------------------------------- */
+
+                    if (
+
+                        visita.estado === "REGISTRADA" ||
+
+                        visita.estado === "ESPERANDO"
+
+                    ) {
+
+                        accion = `
+
+                            <button
+
+                                type="button"
+
+                                class="btn-tomar"
+
+                                onclick="tomarVisita(
+                                    ${visita.id_visita}
+                                )"
+
+                            >
+
+                                Tomar visita
+
+                            </button>
+
+                        `;
+
+                    }
+
+
+
+                    /* ---------------------------------
+                       EN ATENCIÓN
+                    --------------------------------- */
+
+                    else if (
+
+                        visita.estado === "EN_ATENCION"
+
+                    ) {
+
+                        accion = `
+
+                            <div
+                                class="accion-atencion"
+                            >
+
+                                <textarea
+
+                                    class="respuesta-visita"
+
+                                    data-id-visita="${visita.id_visita}"
+
+                                    placeholder="Escribe la respuesta para el visitante..."
+
+                                ></textarea>
+
+
+                                <button
+
+                                    type="button"
+
+                                    class="btn-tomar"
+
+                                    onclick="finalizarVisita(
+                                        ${visita.id_visita}
+                                    )"
+
+                                >
+
+                                    Finalizar atención
+
+                                </button>
+
+                            </div>
+
+                        `;
+
+                    }
+
+
+
+                    /* ---------------------------------
+                       RESUELTA
+                    --------------------------------- */
+
+                    else if (
+
+                        visita.estado === "RESUELTA"
+
+                    ) {
+
+                        accion = `
+
+                            <span
+                                class="mensaje-resuelta"
+                            >
+
+                                ✓ Resuelta
+
+                            </span>
+
+                        `;
+
+                    }
+
+
+
+                    /* =================================
+                       CREAR FILA
+                    ================================= */
+
+                    fila.innerHTML = `
+
+                        <td>
+                            ${visita.visitante || "-"}
+                        </td>
+
+                        <td>
+                            ${visita.asunto || "-"}
+                        </td>
+
+                        <td>
+
+                            <span
+                                class="${clasePrioridad}"
+                            >
+
+                                ${visita.prioridad || "-"}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span
+                                class="${claseEstado}"
+                            >
+
+                                ${visita.estado || "-"}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+                            ${hora}
+                        </td>
+
+                        <td>
+                            ${accion}
+                        </td>
+
+                    `;
+
+
+                    tabla.appendChild(fila);
+
+                }
+
+            );
+
+        }
+
+
+
+        /* =========================================
+           TOMAR VISITA
+        ========================================== */
+
+        async function tomarVisita(idVisita) {
+
+
+            const datos =
+                new FormData();
+
+
+            datos.append(
+                "id_visita",
+                idVisita
+            );
+
+
+            try {
+
+                const respuesta =
+                    await fetch(
+
+                        "./php/tomar_visita.php",
+
+                        {
+
+                            method: "POST",
+
+                            body: datos
+
+                        }
+
+                    );
+
+
+                const resultado =
+                    await respuesta.json();
+
+
+                if (!resultado.exito) {
+
+                    alert(
+                        resultado.mensaje
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    "La visita fue tomada correctamente."
+                );
+
+
+                await cargarVisitas();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                alert(
+                    "Ocurrió un error al tomar la visita."
+                );
+
+            }
+
+        }
+
+
+
+        /* =========================================
+           FINALIZAR VISITA
+        ========================================== */
+
+        async function finalizarVisita(idVisita) {
+
+
+            /*
+             * BUSCAMOS EL TEXTAREA POR EL ID
+             * DE LA VISITA.
+             *
+             * Esto corrige el problema:
+             * "No se encontró el campo de respuesta."
+             */
+
+            const campo =
+                document.querySelector(
+                    `.respuesta-visita[data-id-visita="${idVisita}"]`
+                );
+
+
+            if (!campo) {
+
+                alert(
+                    "No se encontró el campo de respuesta."
+                );
+
+                return;
+
+            }
+
+
+            const respuestaTexto =
+                campo.value.trim();
+
+
+            if (
+                respuestaTexto === ""
+            ) {
+
+                alert(
+                    "Escribe una respuesta antes de finalizar la atención."
+                );
+
+                campo.focus();
+
+                return;
+
+            }
+
+
+
+            const datos =
+                new FormData();
+
+
+            datos.append(
+                "id_visita",
+                idVisita
+            );
+
+
+            datos.append(
+                "respuesta",
+                respuestaTexto
+            );
+
+
+
+            try {
+
+                const respuesta =
+                    await fetch(
+
+                        "./php/finalizar_visita.php",
+
+                        {
+
+                            method: "POST",
+
+                            body: datos
+
+                        }
+
+                    );
+
+
+                const resultado =
+                    await respuesta.json();
+
+
+
+                if (!resultado.exito) {
+
+                    alert(
+                        resultado.mensaje
+                    );
+
+                    return;
+
+                }
+
+
+
+                alert(
+                    "La visita fue finalizada correctamente."
+                );
+
+
+
+                /*
+                 * Volvemos a cargar las visitas
+                 * para actualizar:
+                 *
+                 * EN ATENCIÓN -> RESUELTA
+                 */
+
+                await cargarVisitas();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                alert(
+                    "Ocurrió un error al finalizar la visita."
+                );
+
+            }
+
+        }
+
+
+
+        /* =========================================
+           FILTROS
+        ========================================== */
+
+        document
+            .getElementById("filtro-asunto")
+            .addEventListener(
+                "change",
+                mostrarVisitas
+            );
+
+
+        document
+            .getElementById("filtro-estado")
+            .addEventListener(
+                "change",
+                mostrarVisitas
+            );
+
+
+        document
+            .getElementById("filtro-prioridad")
+            .addEventListener(
+                "change",
+                mostrarVisitas
+            );
+
+
+        document
+            .getElementById("filtro-fecha")
+            .addEventListener(
+                "change",
+                mostrarVisitas
+            );
+
+
+
+        /* =========================================
+           INICIAR
+        ========================================== */
+
+        cargarVisitas();
+
+    </script>
+
+
+</body>
+
+</html>

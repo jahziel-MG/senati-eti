@@ -1,1 +1,91 @@
-﻿<h1>SENATI ETI</h1><p>Sistema de Gestión de Visitas</p>
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Senati ETI | Gestión de Visitas</title>
+
+    <link rel="stylesheet" href="./Css/estilo.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+
+        <div class="logo">
+            <div class="logo-icono">+</div>
+
+            <div>
+                <h1>Senati ETI</h1>
+                <span>Sistema de Gestión de Visitas</span>
+            </div>
+        </div>
+
+    </header>
+
+
+    <main class="contenido">
+
+        <section class="tarjeta">
+
+            <div class="icono-principal">
+                +
+            </div>
+
+            <h2>Bienvenido</h2>
+
+            <p class="descripcion">
+                Registra tu visita de manera rápida y sencilla
+            </p>
+
+            <div class="qr-box">
+
+                <div class="qr">
+                    <span>QR</span>
+                </div>
+
+            </div>
+
+            <p class="texto-qr">
+                📱 Escanea el código QR para registrar tu visita
+            </p>
+
+            <button class="btn-registrar" onclick="registrarVisita()">
+                📋 Registrar visita
+            </button>
+
+            <div class="accesos">
+
+    <a href="login.html?rol=ADMIN" class="btn-acceso">
+        👑
+        <span>Administrador</span>
+    </a>
+
+    <a href="login.html?rol=EMPLEADO" class="btn-acceso">
+        👨‍💼
+        <span>Empleado</span>
+    </a>
+
+</div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="pie">
+
+        <p>Senati ETI © 2026</p>
+
+        <span>Sistema de Gestión de Visitas</span>
+
+    </footer>
+
+
+    <script src="./js/app.js"></script>
+
+</body>
+
+</html>

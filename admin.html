@@ -2,93 +2,681 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Senati ETI | Gestión de Visitas</title>
+    <title>Senati ETI | Administrador</title>
 
     <link rel="stylesheet" href="./Css/estilo.css">
+
+    <!-- Librería para los gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
+    <!-- ENCABEZADO -->
+
     <header class="encabezado">
 
         <div class="logo">
-            <div class="logo-icono">+</div>
+
+            <div class="logo-icono">
+                +
+            </div>
 
             <div>
+
                 <h1>Senati ETI</h1>
-                <span>Sistema de Gestión de Visitas</span>
+
+                <span>
+                    Sistema de Gestión de Visitas
+                </span>
+
             </div>
+
+        </div>
+
+
+        <div class="usuario-header">
+
+            <span>
+                👑 Administrador
+            </span>
+
+            <a href="index.html">
+                Cerrar sesión
+            </a>
+
         </div>
 
     </header>
 
 
-    <main class="contenido">
+    <!-- DASHBOARD -->
 
-        <section class="tarjeta">
+    <main class="dashboard">
 
-            <div class="icono-principal">
-                +
-            </div>
 
-            <h2>Bienvenido</h2>
+        <section class="dashboard-titulo">
 
-            <p class="descripcion">
-                Registra tu visita de manera rápida y sencilla
+            <h2>
+                Dashboard del Administrador
+            </h2>
+
+            <p>
+                Supervisión general del sistema de gestión de visitas
             </p>
 
-            <div class="qr-box">
+        </section>
 
-                <div class="qr">
-                    <span>QR</span>
+
+        <!-- INDICADORES -->
+
+        <section class="indicadores">
+
+
+            <div class="indicador">
+
+                <span class="indicador-icono">
+                    👥
+                </span>
+
+                <div>
+
+                    <p>
+                        Visitantes activos
+                    </p>
+
+                    <h3 id="visitantes-activos">
+                        0
+                    </h3>
+
                 </div>
 
             </div>
 
-            <p class="texto-qr">
-                📱 Escanea el código QR para registrar tu visita
-            </p>
 
-            <button class="btn-registrar" onclick="registrarVisita()">
-                📋 Registrar visita
-            </button>
+            <div class="indicador">
 
-            <div class="separador">
-                <span>Acceso al sistema</span>
+                <span class="indicador-icono">
+                    📋
+                </span>
+
+                <div>
+
+                    <p>
+                        Visitas registradas
+                    </p>
+
+                    <h3 id="visitas-registradas">
+                        0
+                    </h3>
+
+                </div>
+
             </div>
 
-            <div class="accesos">
 
-                <a href="admin.html" class="btn-acceso">
-                    👑
-                    <span>Administrador</span>
-                </a>
+            <div class="indicador">
 
-                <a href="empleado.html" class="btn-acceso">
-                    👨‍💼
-                    <span>Empleado</span>
-                </a>
+                <span class="indicador-icono">
+                    ⏱️
+                </span>
+
+                <div>
+
+                    <p>
+                        Tiempo promedio de espera
+                    </p>
+
+                    <h3 id="tiempo-espera">
+                        0 min
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="indicador">
+
+                <span class="indicador-icono">
+                    ✅
+                </span>
+
+                <div>
+
+                    <p>
+                        Tasa de efectividad
+                    </p>
+
+                    <h3 id="efectividad">
+                        0%
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- GRÁFICOS -->
+
+        <section class="graficos">
+
+
+            <!-- VISITAS POR HORA -->
+
+            <div class="panel">
+
+                <div class="panel-titulo">
+
+                    <div>
+
+                        <h3>
+                            Visitas por hora
+                        </h3>
+
+                        <p>
+                            Horarios con mayor cantidad de visitas
+                        </p>
+
+                    </div>
+
+                    <span>
+                        📈
+                    </span>
+
+                </div>
+
+
+                <div class="grafico-placeholder">
+
+                    <canvas id="graficoVisitasHora"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <!-- RENDIMIENTO -->
+
+            <div class="panel">
+
+                <div class="panel-titulo">
+
+                    <div>
+
+                        <h3>
+                            Rendimiento de empleados
+                        </h3>
+
+                        <p>
+                            Visitas atendidas y resueltas
+                        </p>
+
+                    </div>
+
+                    <span>
+                        📊
+                    </span>
+
+                </div>
+
+
+                <div class="grafico-placeholder">
+
+                    <canvas id="graficoEmpleados"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <!-- DISTRIBUCIÓN POR ASUNTO -->
+
+            <div class="panel">
+
+                <div class="panel-titulo">
+
+                    <div>
+
+                        <h3>
+                            Distribución por asunto
+                        </h3>
+
+                        <p>
+                            Cantidad de visitas por asunto
+                        </p>
+
+                    </div>
+
+                    <span>
+                        🥧
+                    </span>
+
+                </div>
+
+
+                <div class="grafico-placeholder">
+
+                    <canvas id="graficoAsuntos"></canvas>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- AUDITORÍA -->
+
+        <section class="panel auditoria">
+
+            <div class="panel-titulo">
+
+                <div>
+
+                    <h3>
+                        Auditoría de visitas
+                    </h3>
+
+                    <p>
+                        Visitas que superan el tiempo de espera permitido
+                    </p>
+
+                </div>
+
+                <span>
+                    🚨
+                </span>
+
+            </div>
+
+
+            <div class="tabla-contenedor">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Visitante</th>
+                            <th>Asunto</th>
+                            <th>Empleado</th>
+                            <th>Estado</th>
+                            <th>Tiempo de espera</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabla-auditoria">
+
+                        <tr>
+
+                            <td colspan="5">
+                                No hay visitas que superen el tiempo permitido.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
 
             </div>
 
         </section>
 
+
     </main>
 
 
+    <!-- PIE -->
+
     <footer class="pie">
 
-        <p>Senati ETI © 2026</p>
+        <p>
+            Senati ETI © 2026
+        </p>
 
-        <span>Sistema de Gestión de Visitas</span>
+        <span>
+            Panel de Administración
+        </span>
 
     </footer>
 
 
-    <script src="./js/app.js"></script>
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        let graficoVisitasHora = null;
+        let graficoEmpleados = null;
+        let graficoAsuntos = null;
+
+
+        async function cargarDashboard() {
+
+            try {
+
+                const respuesta = await fetch(
+                    "./php/dashboard.php"
+                );
+
+
+                if (!respuesta.ok) {
+
+                    throw new Error(
+                        "No se pudo conectar con dashboard.php"
+                    );
+
+                }
+
+
+                const datos = await respuesta.json();
+
+
+                /* ==============================
+                   INDICADORES
+                ============================== */
+
+                document.getElementById(
+                    "visitantes-activos"
+                ).textContent =
+                    datos.visitantes_activos;
+
+
+                document.getElementById(
+                    "visitas-registradas"
+                ).textContent =
+                    datos.visitas_registradas;
+
+
+                document.getElementById(
+                    "tiempo-espera"
+                ).textContent =
+                    datos.tiempo_promedio_espera + " min";
+
+
+                document.getElementById(
+                    "efectividad"
+                ).textContent =
+                    datos.tasa_efectividad + "%";
+
+
+                /* ==============================
+                   VISITAS POR HORA
+                ============================== */
+
+                const horas =
+                    datos.visitas_hora.map(
+                        visita => visita.hora + ":00"
+                    );
+
+
+                const cantidadesHoras =
+                    datos.visitas_hora.map(
+                        visita => visita.total
+                    );
+
+
+                const canvasHora =
+                    document.getElementById(
+                        "graficoVisitasHora"
+                    );
+
+
+                if (graficoVisitasHora) {
+                    graficoVisitasHora.destroy();
+                }
+
+
+                graficoVisitasHora =
+                    new Chart(canvasHora, {
+
+                        type: "line",
+
+                        data: {
+
+                            labels: horas,
+
+                            datasets: [
+
+                                {
+
+                                    label: "Visitas",
+
+                                    data: cantidadesHoras,
+
+                                    tension: 0.3,
+
+                                    fill: true
+
+                                }
+
+                            ]
+
+                        },
+
+                        options: {
+
+                            responsive: true,
+
+                            maintainAspectRatio: false,
+
+                            plugins: {
+
+                                legend: {
+                                    display: false
+                                }
+
+                            },
+
+                            scales: {
+
+                                y: {
+
+                                    beginAtZero: true,
+
+                                    ticks: {
+                                        precision: 0
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    });
+
+
+                /* ==============================
+                   RENDIMIENTO EMPLEADOS
+                ============================== */
+
+                const empleados =
+                    datos.rendimiento_empleados.map(
+                        empleado => empleado.empleado
+                    );
+
+
+                const cantidadesEmpleados =
+                    datos.rendimiento_empleados.map(
+                        empleado => empleado.total
+                    );
+
+
+                const canvasEmpleados =
+                    document.getElementById(
+                        "graficoEmpleados"
+                    );
+
+
+                if (graficoEmpleados) {
+                    graficoEmpleados.destroy();
+                }
+
+
+                graficoEmpleados =
+                    new Chart(canvasEmpleados, {
+
+                        type: "bar",
+
+                        data: {
+
+                            labels: empleados,
+
+                            datasets: [
+
+                                {
+
+                                    label:
+                                        "Visitas resueltas",
+
+                                    data:
+                                        cantidadesEmpleados
+
+                                }
+
+                            ]
+
+                        },
+
+                        options: {
+
+                            responsive: true,
+
+                            maintainAspectRatio: false,
+
+                            plugins: {
+
+                                legend: {
+                                    display: false
+                                }
+
+                            },
+
+                            scales: {
+
+                                y: {
+
+                                    beginAtZero: true,
+
+                                    ticks: {
+                                        precision: 0
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    });
+
+
+                /* ==============================
+                   DISTRIBUCIÓN POR ASUNTO
+                ============================== */
+
+                const asuntos =
+                    datos.distribucion_asuntos.map(
+                        asunto => asunto.asunto
+                    );
+
+
+                const cantidadesAsuntos =
+                    datos.distribucion_asuntos.map(
+                        asunto => asunto.total
+                    );
+
+
+                const canvasAsuntos =
+                    document.getElementById(
+                        "graficoAsuntos"
+                    );
+
+
+                if (graficoAsuntos) {
+                    graficoAsuntos.destroy();
+                }
+
+
+                graficoAsuntos =
+                    new Chart(canvasAsuntos, {
+
+                        type: "doughnut",
+
+                        data: {
+
+                            labels: asuntos,
+
+                            datasets: [
+
+                                {
+
+                                    label: "Visitas",
+
+                                    data: cantidadesAsuntos
+
+                                }
+
+                            ]
+
+                        },
+
+                        options: {
+
+                            responsive: true,
+
+                            maintainAspectRatio: false,
+
+                            plugins: {
+
+                                legend: {
+
+                                    position: "bottom"
+
+                                }
+
+                            }
+
+                        }
+
+                    });
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Error al cargar dashboard:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* CARGAR DASHBOARD */
+
+        cargarDashboard();
+
+    </script>
+
 
 </body>
 

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Senati ETI | Iniciar sesión</title>
+
+    <link rel="stylesheet" href="./Css/estilo.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+
+        <div class="logo">
+            <div class="logo-icono">+</div>
+
+            <div>
+                <h1>Senati ETI</h1>
+                <span>Sistema de Gestión de Visitas</span>
+            </div>
+        </div>
+
+    </header>
+
+
+    <main class="contenido">
+
+        <section class="tarjeta">
+
+            <div class="icono-principal">
+                🔐
+            </div>
+
+            <h2>Iniciar sesión</h2>
+
+            <p class="descripcion">
+                Ingresa tus datos para acceder al sistema
+            </p>
+
+
+            <form action="./php/login.php" method="POST">
+
+                <input
+                    type="hidden"
+                    name="rol"
+                    id="rol"
+                    value=""
+                >
+
+
+                <div class="campo">
+
+                    <label for="usuario">
+                        Usuario
+                    </label>
+
+                    <input
+                        type="text"
+                        id="usuario"
+                        name="usuario"
+                        placeholder="Ingresa tu usuario"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="password">
+                        Contraseña
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Ingresa tu contraseña"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn-registrar"
+                >
+                    🔑 Iniciar sesión
+                </button>
+
+            </form>
+
+
+            <div class="separador">
+                <span>Volver</span>
+            </div>
+
+
+            <a href="index.html" class="btn-acceso">
+                🏠
+                <span>Volver al inicio</span>
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <footer class="pie">
+
+        <p>Senati ETI © 2026</p>
+
+        <span>Sistema de Gestión de Visitas</span>
+
+    </footer>
+
+
+    <script>
+        const parametros = new URLSearchParams(window.location.search);
+        const rol = parametros.get("rol");
+
+        if (rol === "ADMIN" || rol === "EMPLEADO") {
+            document.getElementById("rol").value = rol;
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Senati ETI | Registrar visita</title>
+
+    <link rel="stylesheet" href="./Css/estilo.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         ENCABEZADO
+    ========================================== -->
+
+    <header class="encabezado">
+
+        <div class="logo">
+
+            <div class="logo-icono">
+                +
+            </div>
+
+            <div>
+                <h1>Senati ETI</h1>
+
+                <span>
+                    Sistema de Gestión de Visitas
+                </span>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         FORMULARIO
+    ========================================== -->
+
+    <main class="contenido">
+
+        <section class="tarjeta formulario-visita">
+
+            <div class="icono-principal">
+                📋
+            </div>
+
+            <h2>Registrar visita</h2>
+
+            <p class="descripcion">
+                Completa tus datos para registrar tu visita
+            </p>
+
+
+            <form
+                action="./php/registrar_visita.php"
+                method="POST"
+            >
+
+
+                <!-- DOCUMENTO -->
+
+                <div class="campo">
+
+                    <label for="documento">
+                        Documento
+                    </label>
+
+                    <input
+                        type="text"
+                        id="documento"
+                        name="documento"
+                        placeholder="Ingresa tu documento"
+                        maxlength="20"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- NOMBRES -->
+
+                <div class="campo">
+
+                    <label for="nombres">
+                        Nombres
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nombres"
+                        name="nombres"
+                        placeholder="Ingresa tus nombres"
+                        maxlength="80"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- APELLIDOS -->
+
+                <div class="campo">
+
+                    <label for="apellidos">
+                        Apellidos
+                    </label>
+
+                    <input
+                        type="text"
+                        id="apellidos"
+                        name="apellidos"
+                        placeholder="Ingresa tus apellidos"
+                        maxlength="80"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- TELÉFONO -->
+
+                <div class="campo">
+
+                    <label for="telefono">
+                        Teléfono
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="telefono"
+                        name="telefono"
+                        placeholder="Ingresa tu teléfono"
+                        maxlength="20"
+                    >
+
+                </div>
+
+
+                <!-- CORREO -->
+
+                <div class="campo">
+
+                    <label for="correo">
+                        Correo electrónico
+                    </label>
+
+                    <input
+                        type="email"
+                        id="correo"
+                        name="correo"
+                        placeholder="ejemplo@correo.com"
+                        maxlength="100"
+                    >
+
+                </div>
+
+
+                <!-- ASUNTO -->
+
+                <div class="campo">
+
+                    <label for="id_asunto">
+                        Asunto de la visita
+                    </label>
+
+                    <select
+                        id="id_asunto"
+                        name="id_asunto"
+                        required
+                    >
+
+                        <option value="">
+                            Selecciona un asunto
+                        </option>
+
+                        <option value="1">
+                            Matrícula
+                        </option>
+
+                        <option value="2">
+                            Pagos
+                        </option>
+
+                        <option value="3">
+                            Tutoría
+                        </option>
+
+                        <option value="4">
+                            Notas
+                        </option>
+
+                        <option value="5">
+                            Certificados
+                        </option>
+
+                        <option value="6">
+                            Otros
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PRIORIDAD -->
+
+                <div class="campo">
+
+                    <label for="prioridad">
+                        Prioridad
+                    </label>
+
+                    <select
+                        id="prioridad"
+                        name="prioridad"
+                        required
+                    >
+
+                        <option value="BAJA">
+                            Baja
+                        </option>
+
+                        <option value="MEDIA" selected>
+                            Media
+                        </option>
+
+                        <option value="ALTA">
+                            Alta
+                        </option>
+
+                        <option value="URGENTE">
+                            Urgente
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- CONSULTA -->
+
+                <div class="campo">
+
+                    <label for="consulta">
+                        Motivo de la visita
+                    </label>
+
+                    <textarea
+                        id="consulta"
+                        name="consulta"
+                        placeholder="Describe brevemente el motivo de tu visita"
+                        rows="4"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- BOTÓN -->
+
+                <button
+                    type="submit"
+                    class="btn-registrar"
+                >
+                    📋 Registrar visita
+                </button>
+
+            </form>
+
+
+            <!-- VOLVER -->
+
+            <div class="separador">
+                <span>Volver</span>
+            </div>
+
+
+            <a
+                href="index.html"
+                class="btn-acceso"
+            >
+                🏠
+                <span>
+                    Volver al inicio
+                </span>
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         PIE
+    ========================================== -->
+
+    <footer class="pie">
+
+        <p>
+            Senati ETI © 2026
+        </p>
+
+        <span>
+            Sistema de Gestión de Visitas
+        </span>
+
+    </footer>
+
+</body>
+
+</html>
