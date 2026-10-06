@@ -1,9 +1,9 @@
 <?php
 
-$servidor = "sql304.infinityfree.com";
-$usuario = "if0_42983342";
-$password = "uz9VHonZsSEzz3";
-$base_datos = "if0_42983342_senati_eti";
+$servidor = "sql205.infinityfree.com";
+$usuario = "if0_43104635";
+$password = "";
+$base_datos = "if0_43104635_sistema_visitas";
 $puerto = 3306;
 
 $conexion = new mysqli(

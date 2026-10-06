@@ -1,8 +1,3 @@
-CREATE DATABASE IF NOT EXISTS senati_eti
-CHARACTER SET utf8mb4
-COLLATE utf8mb4_unicode_ci;
-
-USE senati_eti;
 
 -- ==========================================
 -- TABLA: usuarios
